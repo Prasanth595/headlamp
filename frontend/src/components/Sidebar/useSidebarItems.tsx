@@ -269,6 +269,10 @@ export const useSidebarItems = (sidebarName: string = DefaultSidebars.IN_CLUSTER
         icon: 'mdi:circle-slice-2',
         subList: [
           {
+            name: 'workloads',
+            label: t('translation|Overview'),
+          },
+          {
             name: 'Pods',
             label: t('glossary|Pods'),
           },
@@ -543,6 +547,10 @@ export const useSidebarItems = (sidebarName: string = DefaultSidebars.IN_CLUSTER
     if (crdsSidebarEntries.length !== 0) {
       const sublist: SidebarItemProps[] = [
         {
+          name: 'crds',
+          label: t('translation|Definitions'),
+        },
+        {
           name: 'crs',
           label: t('translation|Instances'),
           divider: true,
@@ -564,6 +572,10 @@ export const useSidebarItems = (sidebarName: string = DefaultSidebars.IN_CLUSTER
         label: t('glossary|Custom Resources'),
         icon: 'mdi:puzzle',
         subList: [
+          {
+            name: 'crds',
+            label: t('translation|Definitions'),
+          },
           {
             name: 'crs',
             label: t('translation|Instances'),
