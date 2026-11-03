@@ -16,7 +16,6 @@
 
 import React from 'react';
 import { useHistory } from 'react-router';
-import NotFoundComponent from '../../components/404';
 import AuthToken from '../../components/account/Auth';
 import AddCluster from '../../components/App/CreateCluster/AddCluster';
 import Home from '../../components/App/Home';
@@ -44,6 +43,8 @@ import DeviceClassDetails from '../../components/device/DeviceClassDetails';
 import DeviceClassList from '../../components/device/DeviceClassList';
 import ResourceClaimDetails from '../../components/device/ResourceClaimDetails';
 import ResourceClaimList from '../../components/device/ResourceClaimList';
+import ResourceClaimTemplateDetails from '../../components/device/ResourceClaimTemplateDetails';
+import ResourceClaimTemplateList from '../../components/device/ResourceClaimTemplateList';
 import EndpointDetails from '../../components/endpoints/Details';
 import EndpointList from '../../components/endpoints/List';
 import EndpointSliceDetails from '../../components/endpointSlices/Details';
@@ -825,6 +826,20 @@ const defaultRoutes: { [routeName: string]: Route } = {
     sidebar: 'resourceClaims',
     component: () => <ResourceClaimDetails />,
   },
+  resourceclaimtemplates: {
+    path: '/resourceclaimtemplates',
+    exact: true,
+    name: 'Resource Claim Templates',
+    sidebar: 'resourceClaimTemplates',
+    component: () => <ResourceClaimTemplateList />,
+  },
+  resourceClaimTemplate: {
+    path: '/resourceclaimtemplates/:namespace/:name',
+    exact: true,
+    name: 'Resource Claim Template',
+    sidebar: 'resourceClaimTemplates',
+    component: () => <ResourceClaimTemplateDetails />,
+  },
   priorityclasses: {
     path: '/priorityclasses',
     exact: true,
@@ -949,6 +964,7 @@ const defaultRoutes: { [routeName: string]: Route } = {
     path: '/auth',
     name: 'OidcAuth',
     sidebar: null,
+    useClusterURL: false,
     noAuthRequired: true,
     component: () => <OIDCAuth />,
   },
@@ -957,6 +973,19 @@ const defaultRoutes: { [routeName: string]: Route } = {
     exact: true,
     name: 'Login',
     sidebar: null,
+    noAuthRequired: true,
+    component: () => (
+      <AuthChooser>
+        <LocaleSelect />
+      </AuthChooser>
+    ),
+  },
+  encodedClusterLogin: {
+    path: '/encoded-clusters/:encodedCluster/login',
+    exact: true,
+    name: 'Login',
+    sidebar: null,
+    useClusterURL: false,
     noAuthRequired: true,
     component: () => (
       <AuthChooser>
@@ -1140,14 +1169,4 @@ const defaultRoutes: { [routeName: string]: Route } = {
 
 setDefaultRoutes(defaultRoutes);
 
-// The NotFound route  needs to be considered always in the last place when used
-// with the router switch, as any routes added after this one will never be considered.
-// So we do not include it in the default routes in order to always "manually" consider it.
-export const NotFoundRoute = {
-  path: '*',
-  exact: true,
-  name: `Whoops! This page doesn't exist`,
-  component: () => <NotFoundComponent />,
-  sidebar: null,
-  noAuthRequired: true,
-};
+export { NotFoundRoute } from './notFoundRoute';

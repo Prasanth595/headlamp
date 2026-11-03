@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+// Registers the app's routes (via setDefaultRoutes) so createRouteURL below has routes to resolve.
+import '../router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { createElement, type ReactNode } from 'react';
@@ -339,6 +341,7 @@ const namespacedClasses = [
   'PodGroup',
   'ReplicaSet',
   'ResourceClaim',
+  'ResourceClaimTemplate',
   'ResourceQuota',
   'Role',
   'RoleBinding',
