@@ -405,4 +405,29 @@ describe('useSidebarItems', () => {
     // Check that home is still present
     expect(result.current.find(it => it.name === 'home')).toBeDefined();
   });
+
+  it('exposes Overview child in Workloads subList and Definitions child in Custom Resources subList', () => {
+    const store = mockStore({}, []);
+    const { result } = renderHook(() => useSidebarItems(DefaultSidebars.IN_CLUSTER), {
+      wrapper: wrapper(store),
+    });
+
+    const workloads = result.current.find(it => it.name === 'workloads');
+    expect(workloads).toBeDefined();
+    expect(workloads?.subList?.[0]).toMatchObject({
+      name: 'workloads',
+      label: 'Overview',
+    });
+
+    const crds = result.current.find(it => it.name === 'crds');
+    expect(crds).toBeDefined();
+    expect(crds?.subList?.[0]).toMatchObject({
+      name: 'crds',
+      label: 'Definitions',
+    });
+    expect(crds?.subList?.[1]).toMatchObject({
+      name: 'crs',
+      label: 'Instances',
+    });
+  });
 });
